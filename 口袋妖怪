@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
-
-df = pd.read_csv('Pokemon.csv')
+import os
+os.chdir(r'D:\Program Files\python练习2)
+df = pd.read_csv('Pokemon (1).csv')
 
 # 1. 验证 Total 值
 print("Total 值验证:", (df['HP'] + df['Attack'] + df['Defense'] + df['Sp. Atk'] + df['Sp. Def'] + df['Speed'] == df['Total']).all())
