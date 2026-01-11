@@ -1,5 +1,6 @@
 import pandas as pd
-
+import os
+os.chdir(r'D:\Program Files\python练习2')
 df = pd.read_csv('chocolate (1).csv')
 
 df.columns = df.columns.str.replace('\n', ' ')
