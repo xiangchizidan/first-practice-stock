@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-os.chdir(D:\Program Files\python练习2)
+os.chdir(r'D:\Program Files\python练习2')
 df = pd.read_csv('Company (1).csv')
 
 print("\n===== 任务1：query 和 loc 筛选 =====")
