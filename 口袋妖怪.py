@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
-os.chdir(r'D:\Program Files\python练习2)
+os.chdir(r'D:\Program Files\python练习2')
 df = pd.read_csv('Pokemon (1).csv')
 
 # 1. 验证 Total 值
