@@ -10,12 +10,12 @@ print(df.query("Age <= 40 and Department in ['Dairy', 'Bakery'] and Gender == 'M
 print("\nloc方法：")
 print(df.loc[(df['Age'] <= 40) & (df['Department'].isin(['Dairy', 'Bakery'])) & (df['Gender'] == 'M')]])
 
-选出员工 ID 号 为奇数所在行的第1、第3和倒数第2列。
+# 选出员工 ID 号 为奇数所在行的第1、第3和倒数第2列。
 odd_rows = df[df.iloc[:, 0] % 2 == 1]
 cols = [df.columns[0], df.columns[2], df.columns[-2]]
 print(odd_rows[cols])
 
-print("\n===== 任务3：多层索引操作 =====")
+#多层索引操作
 df_idx = df.set_index(df.columns[-3:].tolist())
 print("\n1. 后三列设为索引后：")
 print(df_idx)
