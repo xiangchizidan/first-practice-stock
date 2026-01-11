@@ -3,14 +3,14 @@ import os
 os.chdir(r'D:\Program Files\python练习2')
 df = pd.read_csv('Company (1).csv')
 
-print("\n===== 任务1：query 和 loc 筛选 =====")
+#分别只使用 query 和 loc 选出年龄不超过四十岁且工作部门为 Dairy 或 Bakery 的男性。
 print("\nquery方法：")
 print(df.query("Age <= 40 and Department in ['Dairy', 'Bakery'] and Gender == 'M'"))
 
 print("\nloc方法：")
 print(df.loc[(df['Age'] <= 40) & (df['Department'].isin(['Dairy', 'Bakery'])) & (df['Gender'] == 'M')]])
 
-print("\n===== 任务2：奇数ID的第1、3、倒数第2列 =====")
+选出员工 ID 号 为奇数所在行的第1、第3和倒数第2列。
 odd_rows = df[df.iloc[:, 0] % 2 == 1]
 cols = [df.columns[0], df.columns[2], df.columns[-2]]
 print(odd_rows[cols])
