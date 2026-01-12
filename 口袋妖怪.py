@@ -3,31 +3,42 @@ import os
 os.chdir(r'D:\Program Files\python练习2')
 df = pd.read_csv('Pokemon (1).csv')
 
-stats = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed']
+# 1. 验证 Total 值
+print("Total 值验证:", (df['HP'] + df['Attack'] + df['Defense'] + df['Sp. Atk'] + df['Sp. Def'] + df['Speed'] == df['Total']).all())
 
-print("1. Total值验证:", (df[stats].sum(axis=1) == df['Total']).all())
-
+# 2. 删除重复 #
 df = df.drop_duplicates(subset=['#'], keep='first')
 
+# 3. 第一属性分析
 type1_counts = df['Type 1'].value_counts()
-print(f"\n2. 第一属性种类: {len(type1_counts)}, 前三:\n{type1_counts.head(3)}")
+print(f"\n第一属性种类数: {len(type1_counts)}")
+print(f"前三多:\n{type1_counts.head(3)}")
 
+# 4. 属性组合种类
 combos = df['Type 1'] + '/' + df['Type 2'].fillna('None')
-print(f"\n3. 属性组合种类: {combos.nunique()}")
+print(f"\n属性组合种类: {combos.nunique()}")
 
+# 5. 尚未出现的属性组合
 type1_list = df['Type 1'].unique()
 type2_list = df['Type 2'].dropna().unique()
 all_combos = {f"{t1}/{t2}" for t1 in type1_list for t2 in type2_list if t1 != t2}
-
+# actual_combos = set(df[df['Type 2'].notna()][combos].values)
 actual_combos = set(combos[df['Type 2'].notna()].values)
+print(f"\n尚未出现的组合数: {len(all_combos - actual_combos)}")
 
-print(f"\n4. 尚未出现的属性组合: {len(all_combos - actual_combos)}")
-
+# 6. 物攻分类
 attack_class = df['Attack'].apply(lambda x: 'high' if x > 120 else ('low' if x < 50 else 'mid'))
-print(f"\n5. 物攻分类:\n{attack_class.value_counts()}")
+print(f"\n物攻分类:\n{attack_class.value_counts()}")
 
-print(f"\n6. 两种大写方法结果一致: {df['Type 1'].str.upper().equals(df['Type 1'].apply(str.upper))}")
+# 7. 第一属性大写
+type1_upper1 = df['Type 1'].replace({t: t.upper() for t in df['Type 1'].unique()})
+type1_upper2 = df['Type 1'].apply(lambda x: x.upper())
+print(f"\n两种方法结果一致: {type1_upper1.equals(type1_upper2)}")
 
+# 8. 六项能力离差
+stats = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed']
 df['Deviation'] = df[stats].apply(lambda row: max(abs(v - row.median()) for v in row), axis=1)
-print(f"\n7. 离差最大的前10个妖怪:\n{df.nlargest(10, 'Deviation')[['Name', 'Deviation']]}")
+df = df.sort_values('Deviation', ascending=False)
+
+print(f"\n离差最大的前10个妖怪:\n{df[['Name', 'Deviation']].head(10)}")
 
