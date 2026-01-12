@@ -18,7 +18,9 @@ print(f"\n3. 属性组合种类: {combos.nunique()}")
 type1_list = df['Type 1'].unique()
 type2_list = df['Type 2'].dropna().unique()
 all_combos = {f"{t1}/{t2}" for t1 in type1_list for t2 in type2_list if t1 != t2}
-actual_combos = set(df[df['Type 2'].notna()][combos].values)
+
+actual_combos = combos[df['Type 2'].notna()].values
+
 print(f"\n4. 尚未出现的属性组合: {len(all_combos - actual_combos)}")
 
 attack_class = df['Attack'].apply(lambda x: 'high' if x > 120 else ('low' if x < 50 else 'mid'))
