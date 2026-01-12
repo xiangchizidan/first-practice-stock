@@ -19,7 +19,7 @@ type1_list = df['Type 1'].unique()
 type2_list = df['Type 2'].dropna().unique()
 all_combos = {f"{t1}/{t2}" for t1 in type1_list for t2 in type2_list if t1 != t2}
 
-actual_combos = combos[df['Type 2'].notna()].values
+actual_combos = set(combos[df['Type 2'].notna()].values)
 
 print(f"\n4. 尚未出现的属性组合: {len(all_combos - actual_combos)}")
 
